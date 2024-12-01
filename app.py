@@ -164,6 +164,8 @@ if st.button("Train Neural Network Model"):
 def main():
     st.title("MedAI Diagnosis System")
     st.image('MedAI_Logo.gif')  # Replace with the actual path to the logo file
+    st.image('MedAI_Creative_AI_Neural_Network_Logo')
+    st.image('MedAI_Enhanced_Logo_Static')
 
     # Sidebar for user authentication
     st.sidebar.header("User Authentication")
