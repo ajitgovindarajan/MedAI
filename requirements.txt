@@ -1,0 +1,25 @@
+Python 3.10
+
+
+numpy
+pandas
+scikit-learn
+torch
+torchvision
+transformers
+shap
+lime
+omnixai
+spacy
+streamlit
+firebase-admin
+cryptography
+pyotp>=2.8.0
+twilio>=8.2.0
+smtplib
+email 
+stanza
+
+
+for PyTorch use
+https://pytorch.org/get-started/locally/
