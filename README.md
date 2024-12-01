@@ -1,5 +1,5 @@
 # MedAI
-Medical symptom diagnosis system for final MS project and NLP Coure
+Medical symptom diagnosis system for final MS project and NLP Course
 
 
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
