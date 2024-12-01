@@ -16,27 +16,7 @@ Read Me
 
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
-1. Generate 100,000 random integers between 0 - 1,000,000.
-
-Then save them to a text file where each line has 5 numbers per line.
-
-1. Read the numbers back into a plain old array of integers.
-1. Use insertion sort to sort the array
-1. Asks the user to enter a number between 0 - 1,000,000.
-
-The program uses the binary search algorithm to determine
-
-if the specified number is in the array or not.  It also
-
-displays the search step in details
-
-1. Maintain a loop asking if the user wants to play again or not
-
-after a search successfully completes.  Thetest set includes
-
-the following integer numbers.
-
-{-100, 0, 123456, 777777, 459845, 1000000, 1000001}
+1. This program will will generate a disease or ailment diagnosis based on the user or patient input 
 
 
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
@@ -112,6 +92,23 @@ This file is the moving logo for the system in the app page which will provide s
 Name: MedAI_Enhanced_Logo_Static
 
 This file is the static logo for the system in the app page which will provide some illustration
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+* Folders that need to be made
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+Firebase
+
+This folder will have the account credentials as the database of those as well
+
+trained_models
+
+This folder will hav both the trained models of the transformer models and the neural network in the form of .pth files.
+
+Also with in this folder, folders named neural and transformer need to be produced and fixed in path variables
+
 
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
