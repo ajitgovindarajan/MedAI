@@ -1,7 +1,3 @@
-# MedAI
-Medical symptom diagnosis system for final MS project and NLP Course
-
-
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
 * Name      : Ajit Govindarajan
@@ -87,7 +83,7 @@ Name: Transform.py
 
 This file will start with the Natural Language Processing part of this project will run the language model which can take the symptoms from the patient input using the class. The main method will be run through the Transformers library with the uncased Bert classfier with mutiple hidden layers for the optimal language model to help the patients. The next methods will involved NLP with stanza of StanfordNLP with those evauations and metrics from the model.The final part will process the input from the data to see the type of sentences that need to be formed.
 
-Name: MedAI_Cross_Enhanced_Logo_Code.py
+Name: MedAIEnhanced_Logo_Code.py
 
 This file is a utility file that create the moving logo picture for the streamlit application and the and final reports as well as the presentation later. With the help of the matplotlib capabilities allows for a logo that gives some creatvity to the MedAI system. Also this file can give some insights into how certain results could be presented through pictures and not all through text.
 
@@ -96,6 +92,26 @@ Name: Logo.py
 This file is a utility file that create the static logo picture for the streamlit application and the and final reports as well
 as the presentation later.
 With the help of the matplotlib capabilities allows for a logo that gives some creatvity to the MedAI system.
+
+Name: MedAI.yml
+
+This file is the virtual conda enviroment that will best run the system. The running directions is listed below as the environment provides the tailored environment compared to going through the requirements.txt
+
+Name: requirements.txt
+
+This file contains the python version and libraries that are requires to run this program
+
+Name: MedAI_Logo
+
+This file is the main logo to MedAI made from the cross-enhanced file that allows for the glowing logo on the dark webpage
+
+Name: MedAI_Creative_AI_Neural_Network_Logo
+
+This file is the moving logo for the system in the app page which will provide some illustration
+
+Name: MedAI_Enhanced_Logo_Static
+
+This file is the static logo for the system in the app page which will provide some illustration
 
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
@@ -158,8 +174,6 @@ MedAI.yml
 
 Download the program files to your local machine
 
-% cd [MedAI]
-
 Make sure to change the paths of the datasets and the trained_models Change to the directory that contains the datafiles in app.py as well as the saved models and the Firebase
 
 Compile the program by:
@@ -176,6 +190,8 @@ Open a terminal with that environment
 
 1. Run the program by:
 
-heading to the file directory with all of the program files with cd command
+heading to the file directory with all of the program files with cd command: cd /workspace/MedAI
 
-the type 'Streamlit run app.py'
+# replace workspace with the alloted path on your machine
+
+then type 'Streamlit run app.py'
