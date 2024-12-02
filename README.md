@@ -1,3 +1,5 @@
+# MedAI
+
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
 * Name      : Ajit Govindarajan
@@ -189,6 +191,6 @@ Open a terminal with that environment
 
 heading to the file directory with all of the program files with cd command: cd /workspace/MedAI
 
-# replace workspace with the alloted path on your machine
+replace workspace with the alloted path on your machine
 
 then type 'Streamlit run app.py'
