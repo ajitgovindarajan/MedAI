@@ -14,27 +14,15 @@ import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
-from firebase_admin import auth, credentials, initialize_app
+from Firebase import initialize_firebase, register_user_in_firebase, authenticate_user_in_firebase
 import pyotp
 import smtplib
 from email.mime.text import MIMEText
-from email.message import EmailMessage
 
 # AES encryption key (should be stored securely)
 AES_KEY = os.urandom(32)
 
-# Initialize Firebase (reusing Firebase.py functionality)
-firebase_initialized = False
-try:
-    from Firebase import initialize_firebase
-
-    initialize_firebase()
-    firebase_initialized = True
-except ImportError:
-    print("Firebase.py not found or Firebase not initialized.")
-
 # AES Encryption and Decryption
-
 # take in the database data and the username/password data from the patient and then this will enyrpted into the secure 
 # firebase database for the optimal security
 def encrypt_data(data):
@@ -108,36 +96,34 @@ def send_sms(phone_number, message):
 #   User Registration and Login  
 
 # register users with name, passwords and the contact method to use MFA to access account and maybe one day recover account
+# MFA and User Management
 def register_user(username, password, contact_method, contact_value):
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    encrypted_mfa_secret = encrypt_data(generate_mfa_secret())
+    encrypted_mfa_secret = encrypt_data(pyotp.random_base32())
+    
+    initialize_firebase()  # Ensure Firebase is initialized before registration
 
-    if firebase_initialized:
-        # Register user in Firebase
-        auth.create_user(
-            email=username if contact_method == "email" else None,
-            phone_number=contact_value if contact_method == "phone" else None,
-            password=password,
-        )
-        print(f"User {username} registered in Firebase.")
+    if contact_method == "email":
+        success = register_user_in_firebase(email=username, password=password)
+    elif contact_method == "phone":
+        success = register_user_in_firebase(phone=contact_value, password=password)
     else:
-        # Placeholder for local user storage
-        print(f"User {username} registered locally with encrypted MFA secret.")
+        print("Invalid contact method.")
+        success = False
+
+    if success:
+        print(f"User {username} registered successfully with encrypted MFA secret.")
+    else:
+        print(f"User {username} registration failed.")
+
 
 # this will take in the user from the login method with the standard username and password
-def login_user(username, password):
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-
-    if firebase_initialized:
-        try:
-            # Authenticate with Firebase
-            user = auth.get_user_by_email(username)
-            print(f"User {username} authenticated via Firebase.")
-            return True
-        except Exception as e:
-            print(f"Firebase authentication failed: {e}")
-            return False
-    else:
-        # Placeholder for local authentication
-        print(f"User {username} authenticated locally.")
+def login_user(username):
+    initialize_firebase()  # Ensure Firebase is initialized before authentication
+    user = authenticate_user_in_firebase(email=username)
+    if user:
+        print(f"User {username} authenticated successfully.")
         return True
+    else:
+        print(f"User {username} authentication failed.")
+        return False

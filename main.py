@@ -12,14 +12,15 @@ import pandas as pd
 from Neural import PyTorchMulticlassNN, train_pytorch_model, evaluate_pytorch_model
 from Transform import TransformerSymptomClassifier, train_transformer_model, evaluate_transformer_model, preprocess_text_with_stanza
 from DataLoader import load_multiple_files, preprocess_and_split_data
+from omniExpAI import explain_model_integration # integrate the OmniXAI cabability in the main so then the app will call it
 from account import register_user, login_user  # Import account functions
 
 FAIRNESS_THRESHOLD = 0.1  # Set a threshold for demographic parity difference
 
 
-#   Model Initialization and Training  
+# Model Initialization and Training  
 
-#     Initializes and trains a Transformer-based model with Stanza preprocessing.
+# Initializes and trains a Transformer-based model with Stanza preprocessing.
 # this function will take in the dataset paths, the output classes for classification, the training epochs and the batch size
 # to yeidl the model of the transformer
 def initialize_and_train_transformer(file_paths, num_classes, epochs=3, batch_size=32):
@@ -92,6 +93,36 @@ def evaluate_models(file_paths, transformer_model=None, neural_model=None):
     if neural_model:
         print("Evaluating Neural Network model...")
         evaluate_pytorch_model(neural_model, test_loader)
+
+# This function will refer the XAI aspect of the project by calling the OmniXAI file that we have made
+def generate_explanations(model_path, dataset_path, sample_input, method="shap"):
+    try:
+        # Validate input
+        if isinstance(sample_input, dict):
+            # Convert dictionary to Pandas DataFrame
+            sample_input = pd.DataFrame([sample_input])
+        elif not isinstance(sample_input, pd.DataFrame):
+            raise ValueError("Sample input must be a dictionary or a Pandas DataFrame.")
+
+        # Load the dataset for additional context
+        context_data = pd.read_csv(dataset_path)
+
+        # Call OmniXAI explanation integration
+        explanations = explain_model_integration(
+            model_path=model_path,
+            dataset_path=dataset_path,
+            sample_input=sample_input,
+            method=method,
+        )
+
+        # Log or display the explanation (for debugging or further use)
+        print(f"Explanation generated using {method}: {explanations}")
+        return explanations
+# error handling
+    except Exception as e:
+        print(f"Error generating explanations: {e}")
+        return {"error": str(e)}
+
 
 
 #   User Authentication Wrappers  

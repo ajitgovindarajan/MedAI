@@ -138,8 +138,13 @@ def evaluate_transformer_model(model, dataloader):
 
 # Create a DataLoader from input features and labels with features, labels and batch size through the tensor library.
 def create_dataloader(features, labels, batch_size=32):
-    # set the datatset
-    dataset = TensorDataset(features, labels)
-    # obtain the dataloader variable
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-    return dataloader
+    try:
+        # set the datatset
+        dataset = TensorDataset(features, labels)
+        # obtain the dataloader variable
+        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+        return dataloader
+    # incase there is a porblem with the data
+    except Exception as e:
+        print(f"Error creating DataLoader: {e}")
+        raise

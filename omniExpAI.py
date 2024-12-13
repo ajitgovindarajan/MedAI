@@ -9,12 +9,15 @@ omniExpAI.py
  Then when the methods are initialized, the explaining will happen with the methods that is requested from the app.py 
  and then the integration will occur with app.py with the help of the integration method
 '''
-import numpy as np
 import pandas as pd
 import torch
 from omnixai.explainers.tabular import TabularExplainer
 #from omnixai.explainers.text import TextExplainer
-from omnixai.explainers.tabular.counterfactual import CounterfactualExplainer
+import numpy as np
+#import tensorflow as tf
+import matplotlib.pyplot as plt
+from omnixai.data.image import Image
+from omnixai.explainers.vision import CounterfactualExplainer
 from sklearn.preprocessing import MinMaxScaler
 from Neural import PyTorchMulticlassNN
 from DataLoader import preprocess_and_split_data
