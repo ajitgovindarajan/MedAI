@@ -3,18 +3,32 @@ DataLoader.py
 This file will be the way that data is extracted from the datasets whether they are XAI datasets and symptom datasets
  The files will be combines from the path and will split into 20-80 split with the seeding of the random state
 '''
-import os
+import matplotlib.pyplot as plt
 import pandas as pd
 import torch
 from sklearn.model_selection import train_test_split
-from Transform import preprocess_text
+from Transform import preprocess_text_with_stanza
 from torch.utils.data import DataLoader, TensorDataset
+
+# this method will help to train the neural network with the mulitple files through the paths in 
+def load_multiple_files(file_paths, column_mappings=None):
+    dfs = []
+    for path in file_paths:
+        try:
+            df = pd.read_csv(path)
+            if column_mappings:
+                df.rename(columns=column_mappings, inplace=True)
+            dfs.append(df)
+        except Exception as e:
+            print(f"Error reading {path}: {e}")
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
 
 # Categorize datasets into symptom and EXAI datasets based on file naming or content.
 # with the list of datasets from app.py and the identifier on the datasets output a dictionary of data
 # one dictionary with symptoms and XAI data
 def load_and_categorize_files(file_paths, exai_keyword="EXAI"):
-    # initialize the data dictionries
+    # initialize the data dictionaries
     symptom_data = []
     exai_data = []
 # loop the loading of the those datasets
@@ -56,6 +70,7 @@ def preprocess_exai_data(exai_data):
 # Preprocess and split the data into training and testing sets.
 # with the new dataframe, the 80-20 train-test split, the random seeding allows for the dataloaders of the training 
 # and testing datasets
+# Preprocess and split the data into training and testing sets.
 def preprocess_and_split_data(df, test_size=0.2, random_state=42, disease_filter=None):
     try:
         if disease_filter:
@@ -70,7 +85,7 @@ def preprocess_and_split_data(df, test_size=0.2, random_state=42, disease_filter
         labels = df['label'].tolist()
 
         # Preprocess symptoms using the BERT tokenizer
-        input_ids, attention_mask = preprocess_text(texts)
+        input_ids, attention_mask = preprocess_text_with_stanza(texts)
 
         # Convert labels to tensor
         labels_tensor = torch.tensor(labels)
@@ -84,11 +99,45 @@ def preprocess_and_split_data(df, test_size=0.2, random_state=42, disease_filter
         train_dataloader = create_dataloader(train_ids, train_mask, train_labels)
         test_dataloader = create_dataloader(test_ids, test_mask, test_labels)
         return train_dataloader, test_dataloader
-    
-# need the exception for any errors
     except Exception as e:
         print(f"Error preprocessing and splitting data: {e}")
         raise
+
+# this method will look a the corpus data in the tokenization through distributions, vocabulary size
+def evaluate_corpus_data(df, text_column="conversation"):
+    try:
+        if text_column not in df.columns:
+            raise ValueError(f"The DataFrame must contain a '{text_column}' column for corpus evaluation.")
+
+        # Tokenize the text data using whitespace
+        all_tokens = [token for text in df[text_column].dropna() for token in text.split()]
+        token_counts = Counter(all_tokens)
+        vocab_size = len(token_counts)
+        token_distribution = list(token_counts.values())
+
+        # Corpus statistics
+        print(f"Vocabulary Size: {vocab_size}")
+        print(f"Total Tokens: {sum(token_distribution)}")
+        print(f"Top 10 Most Frequent Tokens: {token_counts.most_common(10)}")
+
+        # Visualize token distribution
+        plt.figure(figsize=(10, 6))
+        plt.hist(token_distribution, bins=50, color="blue", alpha=0.7)
+        plt.title("Token Distribution in Corpus")
+        plt.xlabel("Frequency")
+        plt.ylabel("Count")
+        plt.show()
+
+        return {
+            "vocab_size": vocab_size,
+            "total_tokens": sum(token_distribution),
+            "most_frequent_tokens": token_counts.most_common(10),
+            "token_distribution": token_distribution,
+        }
+    except Exception as e:
+        print(f"Error evaluating corpus data: {e}")
+        raise
+
 
 # Creates a PyTorch DataLoader for batching input IDs, attention masks, and labels.
 def create_dataloader(input_ids, attention_mask, labels, batch_size=32):
@@ -101,31 +150,3 @@ def create_dataloader(input_ids, attention_mask, labels, batch_size=32):
     except Exception as e:
         print(f"Error creating DataLoader: {e}")
         raise
-
- # below is the example for what would be the use of the DataLoader
- # and also this was done for testing purposes
-'''
-if __name__ == "__main__":
-    # List of dataset file paths
-    dataset_files = [
-        "path_to_symptom_dataset1.csv",
-        "path_to_exai_dataset.csv",
-        "path_to_symptom_dataset2.csv"
-    ]
-
-    # Load and categorize datasets
-    categorized_data = load_and_categorize_files(dataset_files)
-    symptom_data = categorized_data["symptom_data"]
-    exai_data = categorized_data["exai_data"]
-
-    # Process EXAI datasets
-    if exai_data is not None:
-        exai_results = preprocess_exai_data(exai_data)
-        print(f"Processed EXAI Data Types: {exai_results.keys()}")
-
-    # Preprocess and split symptom datasets
-    if symptom_data is not None:
-        train_loader, test_loader = preprocess_and_split_data(symptom_data)
-        print(f"Number of training batches: {len(train_loader)}")
-        print(f"Number of testing batches: {len(test_loader)}")
-'''
