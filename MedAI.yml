@@ -1,5 +1,6 @@
 name: MedAI
 channels:
+  - numba
   - pytorch
   - conda-forge
   - defaults
@@ -35,9 +36,9 @@ dependencies:
   - brotli-python=1.0.9=py310hd77b12b_8
   - bzip2=1.0.8=h2bbff1b_6
   - c-ares=1.34.3=h2466b09_1
-  - ca-certificates=2024.9.24=haa95532_0
+  - ca-certificates=2024.11.26=haa95532_0
   - catalogue=2.0.10=py310h5588dad_0
-  - certifi=2024.8.30=pyhd8ed1ab_0
+  - certifi=2024.8.30=py310haa95532_0
   - cfitsio=3.470=h0af3d06_7
   - charls=2.2.0=h39d44d4_0
   - charset-normalizer=3.3.2=pyhd3eb1b0_0
@@ -142,7 +143,7 @@ dependencies:
   - multiprocess=0.70.17=py310ha8f682b_1
   - munkres=1.1.4=pyh9f0ad1d_0
   - networkx=3.2.1=py310haa95532_0
-  - numba=0.60.0=py310h7793332_0
+  - numba=0.60.0=np2.0py3.10h5605099_g53e976f1b_0
   - omnixai=1.3.1=pyhd8ed1ab_0
   - openai=1.55.1=pyhd8ed1ab_0
   - openjpeg=2.5.2=hae555c5_0
@@ -186,7 +187,6 @@ dependencies:
   - safetensors=0.4.5=py310hc226416_0
   - salib=1.5.1=pyhd8ed1ab_0
   - scikit-image=0.24.0=py310hb4db72f_3
-  - scikit-learn=1.1.3=py310had3394f_1
   - scipy=1.14.1=py310hbd0dde3_1
   - setuptools=75.1.0=py310haa95532_0
   - shap=0.46.0=cpu_py310h5d0be4b_1
@@ -274,7 +274,7 @@ dependencies:
       - msgpack==1.1.0
       - murmurhash==1.0.11
       - narwhals==1.14.2
-      - numpy==2.0.2
+      - numpy==1.23.5
       - proto-plus==1.25.0
       - protobuf==5.28.3
       - pyarrow==18.1.0
@@ -287,6 +287,7 @@ dependencies:
       - referencing==0.35.1
       - rpds-py==0.21.0
       - rsa==4.9
+      - scikit-learn==1.1.3
       - seaborn==0.13.2
       - smmap==5.0.1
       - stanza==1.9.2
